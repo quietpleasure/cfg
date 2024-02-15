@@ -1,6 +1,7 @@
 package cfg
 
 import (
+	"fmt"
 	"os"
 	"path/filepath"
 
@@ -54,18 +55,28 @@ func (c *Config) Decode(out interface{}, tagname ...string) error {
 	if tagname != nil {
 		tag = tagname[0]
 	}
-	d, err := mapstructure.NewDecoder(&mapstructure.DecoderConfig{
-		TagName:          tag,
-		WeaklyTypedInput: true,
-		Result:           out,
-		DecodeHook: mapstructure.ComposeDecodeHookFunc(
-			mapstructure.StringToTimeDurationHookFunc(),
-		),
-		ErrorUnused: true,
-		ErrorUnset:  true,
-	})
+	m := new(mapstructure.Metadata)
+	d, err := mapstructure.NewDecoder(
+		&mapstructure.DecoderConfig{
+			Metadata:         m,
+			TagName:          tag,
+			WeaklyTypedInput: true,
+			Result:           out,
+			DecodeHook: mapstructure.ComposeDecodeHookFunc(
+				mapstructure.StringToTimeDurationHookFunc(),
+			),
+			ErrorUnused: true,
+			ErrorUnset:  true,
+		},
+	)
 	if err != nil {
 		return err
 	}
-	return d.Decode(c.Data)
+	if err := d.Decode(c.Data); err != nil {
+		return nil
+	}
+	if len(m.Unused) > 0 {
+		return fmt.Errorf("not all data was decoded because there was no corresponding field in the result interface")
+	}
+	return nil
 }
