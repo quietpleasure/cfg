@@ -31,7 +31,7 @@ func (c *Config) LoadGlob(pattern string) error {
 	return nil
 }
 
-//TODO: add .ini
+// TODO: add .ini
 func (c *Config) LoadFile(filename string) error {
 	data, err := os.ReadFile(filename)
 	if err != nil {
@@ -62,6 +62,7 @@ func (c *Config) Decode(out interface{}, tagname ...string) error {
 			mapstructure.StringToTimeDurationHookFunc(),
 		),
 		ErrorUnused: true,
+		ErrorUnset:  true,
 	})
 	if err != nil {
 		return err
