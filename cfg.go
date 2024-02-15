@@ -65,8 +65,8 @@ func (c *Config) Decode(out interface{}, tagname ...string) error {
 			DecodeHook: mapstructure.ComposeDecodeHookFunc(
 				mapstructure.StringToTimeDurationHookFunc(),
 			),
-			ErrorUnused: true,
-			ErrorUnset:  true,
+			// ErrorUnused: true,
+			// ErrorUnset:  true,
 		},
 	)
 	if err != nil {
