@@ -1,7 +1,6 @@
 package cfg
 
 import (
-	"fmt"
 	"os"
 	"path/filepath"
 
@@ -75,8 +74,8 @@ func (c *Config) Decode(out interface{}, tagname ...string) error {
 	if err := d.Decode(c.Data); err != nil {
 		return err
 	}
-	if len(m.Unused) > 0 {
-		return fmt.Errorf("not all data was decoded because there was no corresponding field in the result interface")
-	}
+	// if len(m.Unused) > 0 {
+	// 	return fmt.Errorf("not all data was decoded because there was no corresponding field in the result interface")
+	// }
 	return nil
 }
