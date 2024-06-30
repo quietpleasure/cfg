@@ -7,6 +7,8 @@ import (
 	"github.com/mitchellh/mapstructure"
 )
 
+//last git version=d374122
+
 type Config struct {
 	Data map[string]interface{}
 }
