@@ -8,6 +8,8 @@ import (
 	"github.com/mitchellh/mapstructure"
 )
 
+//last git version=d374122
+
 type Config struct {
 	Data map[string]interface{}
 }
@@ -58,10 +60,10 @@ func (c *Config) Decode(out interface{}, tagname ...string) error {
 	if tagname != nil {
 		tag = tagname[0]
 	}
-	m := new(mapstructure.Metadata)
+	// m := new(mapstructure.Metadata)
 	d, err := mapstructure.NewDecoder(
 		&mapstructure.DecoderConfig{
-			Metadata:         m,
+			// Metadata:         m,
 			TagName:          tag,
 			WeaklyTypedInput: true,
 			Result:           out,
