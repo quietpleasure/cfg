@@ -1,6 +1,7 @@
 package cfg
 
 import (
+	"fmt"
 	"os"
 	"path/filepath"
 
@@ -21,6 +22,9 @@ func (c *Config) LoadGlob(pattern string) error {
 	files, err := filepath.Glob(pattern)
 	if err != nil {
 		return err
+	}
+	if len(files) == 0 {
+		return fmt.Errorf("empty dir or files does not exist")
 	}
 	for _, filename := range files {
 		err = c.LoadFile(filename)
